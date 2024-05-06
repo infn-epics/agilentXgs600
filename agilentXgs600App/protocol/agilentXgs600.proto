@@ -1,0 +1,96 @@
+# Stream Device Protocol for the Agilent XGS-600 Gauge Controller
+# Pete Owens 24/6/2015
+#
+# Message format is:
+#      "#aanndddd"
+# Response format is:
+#      ">dddd"
+# where:
+#      aa   : RS485 address - hex 00 - 20 (00 for RS232)
+#      nn   : Command number - hex 01 - FF
+#      c    : Optional Sensor Code - I=IMG, T=CNV
+#      n    : Optional Sensor Number
+#      dddd : Data (optional
+# 
+# Arguments:
+# $1 = channel: 1 digit - 1-4
+
+
+replytimeout = 100;
+readtimeout  = 100;
+terminator   = CR;
+
+#get_test { out "#0004I1"; in "%30c"; }
+
+#
+# Controller Parameters
+#
+get_slots { out "#0001"; in ">"        "%{10|3A|40|FE}"
+                            "%(\$1:SLOT2){10|3A|40|FE}"
+                            "%(\$1:SLOT3){10|3A|40|FE}"
+                            "%(\$1:SLOT4){10|3A|40|FE}"
+                            "%(\$1:SLOT5){10|3A|40|FE}"
+                            "%(\$1:SLOT6){10|3A|40|FE}"; }
+get_rev   { out "#0005"; in ">%d,"
+                            "%(\$1:REV1_RB)d,"
+                            "%(\$1:REV2_RB)d,"
+                            "%(\$1:REV3_RB)d,"
+                            "%(\$1:REV4_RB)d,"
+                            "%(\$1:REV5_RB)d,"
+                            "%(\$1:REV6_RB)d" ; }
+
+reset     { out "#0006";         in ">";   }
+set_unit  { out "#001%1d";       in ">";   }
+get_unit  { out "#0013";         in ">%d"; }
+set_lock  { out "#002%1d";       in ">";   }
+get_lock  { out "#0022";         in ">%d"; }
+set_afadv { out "#003%{5|6}";    in ">";   }
+get_afadv { out "#0037";         in ">%d"; }
+set_atmos { out "#00A3%.3fE+03"; in ">";   }
+
+#
+# Gauge Parameters
+#
+get_pres  { out "#0002\$1";    in ">%g";  }
+set_label { out "#0014\$1%5s"; in ">";    }
+get_label { out "#0015\$1";    in ">%5c"; }
+
+#
+# IMG Parameters
+#
+set_auto  { out "#00B0\$1\$2%.1E"; in ">";       }
+get_auto  { out "#00B1\$1";        in ">%*5c%g"; }
+set_tube  { out "#0016\$1%{11|13|51|52|63|64|71|72|80|81}"; in ">"; }
+get_tube  { out "#0017\$1";        in ">%{11|13|51|52|63|64|71|72|80|81}"; }
+set_emis  { out "#003%{0|1|3}\$1"; in ">";   }
+get_emis  { out "#0032\$1";        in ">%d"; }
+#get_fil  { out "#0034\$1";        in ">%d"; }
+get_corr  { out "#0050\$1";        in ">%g"; }
+set_corr  { out "#0051\$1%.3f";    in ">";   }
+get_sens  { out "#0054\$1";        in ">%g"; }
+set_sens  { out "#0055\$1%05.2f";  in ">";   }
+
+#
+# AUX and CNV Parameters
+#
+calib     { out "#00A1\$1";    in ">";   }
+get_gas   { out "#004E\$1";    in ">%d"; }
+set_gas   { out "#004F\$1%1d"; in ">";   }
+
+#
+# Setpoint Parameters
+#
+get_spstate   { out "#0003";            in ">%x";       }
+get_spasnd    { out "#0004\$1";         in ">%x";       }
+set_spmode    { out "#005E\$1%{0|1|3}"; in ">";         }
+get_spmode    { out "#005F\$1";         in ">%{0|1|3}"; }
+set_sponpres  { out "#006\$1\$2%9.3E";  in ">";         }
+set_spoffpres { out "#007\$1\$2%9.3E";  in ">";         }
+get_sponpres  { out "#008\$1";          in ">%g";       }
+get_spoffpres { out "#009\$1";          in ">%g";       }
+set_spondel   { out "#00C\$1\$2%3.1f";  in ">";         }
+set_spoffdel  { out "#00D\$1\$2%3.1f";  in ">";         }
+get_spondel   { out "#00E\$1";          in ">%g";       }
+get_spoffdel  { out "#00F\$1";          in ">%g";       }
+
+######################################################################

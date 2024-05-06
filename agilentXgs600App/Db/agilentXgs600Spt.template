@@ -1,0 +1,187 @@
+# agilentXgs600Spt.template
+# Template database for Agilent XGS-600 Setpoint
+# Pete Owens 10/7/2015
+#
+# substitutions:
+# device  - device name
+# port    - asyn port
+# number  - setpoint number (1-8)
+# sensor  - sensor (I1-I4,T1-T4)
+#
+################################################################################
+# Setpoint mode
+#
+record(mbbo, "$(device):MODE_SP")
+{
+    field(DESC, "Mode")
+    field(DTYP, "stream")
+    field(OUT,  "@agilentXgs600.proto set_spmode($(number)) $(port)")
+    field(ZRST, "Off")
+    field(ONST, "On")
+    field(TWST, "Auto")
+}
+record(mbbi, "$(device):MODE_RB")
+{
+    field(DESC, "Mode")
+    field(DTYP, "stream")
+    field(INP,  "@agilentXgs600.proto get_spmode($(number)) $(port)")
+    field(SCAN, "1 second")
+    field(ZRST, "Off")
+    field(ONST, "On")
+    field(TWST, "Auto")
+}
+################################################################################
+# Setpoint Assigned
+#
+record(bi, "$(device):ASND")
+{    
+    field(DESC, "Setpoint Assigned")
+    field(INP,  "$(device):ASND_CAL PP MS")
+    field(ZNAM, "Not Assigned")
+    field(ONAM, "Assigned")
+    field(ZSV,  "MAJOR")
+}
+record(longin, "$(device):ASND_RB")
+{
+    field(DTYP, "stream")
+    field(INP,  "@agilentXgs600.proto get_spasnd($(sensor)) $(port)")
+    field(SCAN, "5 second")
+    field(FLNK, "$(device):ASND")
+}
+record(calc, "$(device):ASND_CAL")
+{
+    field(CALC, "(A>>(B-1))&1")
+    field(INPA, "$(device):ASND_RB MS")
+    field(INPB, "$(number)")
+}
+################################################################################
+# ON Setpoint
+#
+record(ao, "$(device):ONPRES_SP")
+{
+    field(DESC, "On Pressure")
+    field(DTYP, "stream")
+    field(OUT,  "@agilentXgs600.proto set_sponpres($(number),$(sensor)) $(port)")
+    field(EGU,  "mbar")
+    field(PREC, "9")
+    field(LOPR, "0")
+    field(HOPR, "1000")
+    field(DRVL, "0")
+    field(DRVH, "1000")
+}
+record(ai, "$(device):ONPRES_RB")
+{
+    field(DESC, "On Pressure")
+    field(DTYP, "stream")
+    field(INP,  "@agilentXgs600.proto get_sponpres($(number)) $(port)")
+    field(SCAN, "2 second")
+    field(EGU,  "mbar")
+    field(PREC, "9")
+    field(LOPR, "0")
+    field(HOPR, "1000")
+    field(LOW,  "0")
+    field(HIGH, "1")
+    field(LOLO, "-0.1")
+    field(HIHI, "1000")
+    field(LSV,  "MINOR")
+    field(HSV,  "MINOR")
+    field(LLSV, "MAJOR")
+    field(HHSV, "MAJOR")
+}
+record(ao, "$(device):ONDEL_SP")
+{
+    field(DESC, "On Delay")
+    field(DTYP, "stream")
+    field(OUT,  "@agilentXgs600.proto set_spondel($(number),$(sensor)) $(port)")
+    field(EGU,  "s")
+    field(PREC, "1")
+    field(LOPR, "0")
+    field(HOPR, "10")
+    field(DRVL, "0")
+    field(DRVH, "9.9")
+}
+record(ai, "$(device):ONDEL_RB")
+{
+    field(DESC, "On Delay")
+    field(DTYP, "stream")
+    field(INP,  "@agilentXgs600.proto get_spondel($(number)) $(port)")
+    field(SCAN, "2 second")
+    field(EGU,  "s")
+    field(PREC, "1")
+    field(LOPR, "0")
+    field(HOPR, "10")
+    field(LOW,  "-0.1")
+    field(HIGH, "10")
+    field(LOLO, "-0.1")
+    field(HIHI, "10.1")
+    field(LSV,  "MINOR")
+    field(HSV,  "MINOR")
+    field(LLSV, "MAJOR")
+    field(HHSV, "MAJOR")
+}
+################################################################################
+# OFF Setpoint
+#
+record(ao, "$(device):OFFPRES_SP")
+{
+    field(DESC, "Off Pressure")
+    field(DTYP, "stream")
+    field(OUT,  "@agilentXgs600.proto set_spoffpres($(number),$(sensor)) $(port)")
+    field(EGU,  "mbar")
+    field(PREC, "9")
+    field(LOPR, "0")
+    field(HOPR, "1000")
+    field(DRVL, "0")
+    field(DRVH, "1000")
+}
+record(ai, "$(device):OFFPRES_RB")
+{
+    field(DESC, "Off Pressure")
+    field(DTYP, "stream")
+    field(INP,  "@agilentXgs600.proto get_spoffpres($(number)) $(port)")
+    field(SCAN, "2 second")
+    field(EGU,  "mbar")
+    field(PREC, "9")
+    field(LOPR, "0")
+    field(HOPR, "1000")
+    field(LOW,  "0")
+    field(HIGH, "1")
+    field(LOLO, "-0.1")
+    field(HIHI, "1000")
+    field(LSV,  "MINOR")
+    field(HSV,  "MINOR")
+    field(LLSV, "MAJOR")
+    field(HHSV, "MAJOR")
+}
+record(ao, "$(device):OFFDEL_SP")
+{
+    field(DESC, "Off Delay")
+    field(DTYP, "stream")
+    field(OUT,  "@agilentXgs600.proto set_spoffdel($(number),$(sensor)) $(port)")
+    field(EGU,  "s")
+    field(PREC, "1")
+    field(LOPR, "0")
+    field(HOPR, "10")
+    field(DRVL, "0")
+    field(DRVH, "9.9")
+}
+record(ai, "$(device):OFFDEL_RB")
+{
+    field(DESC, "On Delay")
+    field(DTYP, "stream")
+    field(INP,  "@agilentXgs600.proto get_spoffdel($(number)) $(port)")
+    field(SCAN, "2 second")
+    field(EGU,  "s")
+    field(PREC, "1")
+    field(LOPR, "0")
+    field(HOPR, "10")
+    field(LOW,  "-0.1")
+    field(HIGH, "10")
+    field(LOLO, "-0.1")
+    field(HIHI, "10.1")
+    field(LSV,  "MINOR")
+    field(HSV,  "MINOR")
+    field(LLSV, "MAJOR")
+    field(HHSV, "MAJOR")
+}
+################################################################################
