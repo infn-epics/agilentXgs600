@@ -1,0 +1,208 @@
+# agilentXgs600Img template
+# Template database for the the Agilent XGS-600 Inverted Megnetron Gauge
+# Pete Owens 24/6/2015
+#
+# substitutions:
+# device  - device name
+# port    - asyn port
+# sensor  - sensor (I1-I4)
+# tcauto  - TC auto-on sensor (T1-T4)
+#
+################################################################################
+# Pressure
+#
+record(ai, "$(device):PRES")
+{
+    field(DESC, "Pressure")
+    field(DTYP, "stream")
+    field(INP,  "@agilentXgs600.proto get_pres($(sensor)) $(port)")
+    field(SCAN, "1 second")
+    field(EGU,  "mbar")
+    field(PREC, "9")
+    field(LOPR, "0")
+    field(HOPR, "1000")
+    field(LOW,  "0")
+    field(HIGH, "1")
+    field(LOLO, "-0.1")
+    field(HIHI, "1000")
+    field(LSV,  "MINOR")
+    field(HSV,  "MINOR")
+    field(LLSV, "MAJOR")
+    field(HHSV, "MAJOR")
+}
+################################################################################
+# User Label
+#
+record(stringout, "$(device):LABEL_SP")
+{
+    field(DESC, "User Label")
+    field(DTYP, "stream")
+    field(OUT,  "@agilentXgs600.proto set_label($(sensor)) $(port)")
+}
+record(stringin, "$(device):LABEL_RB")
+{
+    field(DESC, "User Label")
+    field(DTYP, "stream")
+    field(INP,  "@agilentXgs600.proto get_label($(sensor)) $(port)")
+    field(SCAN, "10 second")
+}
+################################################################################
+# Auto-On
+#
+record(ao, "$(device):AUTO_SP")
+{
+    field(DESC, "Auto-On")
+    field(DTYP, "stream")
+    field(OUT,  "@agilentXgs600.proto set_auto($(sensor),$(tcauto)) $(port)")
+    field(PREC, "9")
+    field(LOPR, "0")
+    field(HOPR, "1")
+    field(DRVL, "0.0001")
+    field(DRVH, "1")
+}
+record(ai, "$(device):AUTO_RB")
+{
+    field(DESC, "Auto-On")
+    field(DTYP, "stream")
+    field(INP,  "@agilentXgs600.proto get_auto($(sensor)) $(port)")
+    field(SCAN, "5 second")
+    field(EGU,  "mbar")
+    field(PREC, "4")
+    field(LOPR, "0")
+    field(HOPR, "1")
+    field(LOW,  "0.0001")
+    field(HIGH, "1.0")
+    field(LOLO, "0")
+    field(HIHI, "1.1")
+    field(LSV,  "MINOR")
+    field(HSV,  "MINOR")
+    field(LLSV, "MAJOR")
+    field(HHSV, "MAJOR")
+}
+################################################################################
+# Tube Type
+#
+record(mbbo, "$(device):TUBE_SP")
+{
+    field(DESC, "State")
+    field(DTYP, "stream")
+    field(OUT,  "@agilentXgs600.proto set_tube($(sensor)) $(port)")
+    field(ZRST, "IMG100")
+    field(ONST, "IMG300")
+    field(TWST, "MBA100")
+    field(THST, "MBA200")
+    field(FRST, "563")
+    field(FVST, "564")
+    field(SXST, "571")
+    field(SVST, "572")
+    field(EIST, "Pa")
+    field(NIST, "UHV24")
+    field(TEST, "UHV24p")
+}
+record(mbbi, "$(device):TUBE_RB")
+{
+    field(DESC, "State")
+    field(DTYP, "stream")
+    field(INP,  "@agilentXgs600.proto get_tube($(sensor)) $(port)")
+    field(SCAN, "10 second")
+    field(ZRST, "IMG100")
+    field(ONST, "IMG300")
+    field(TWST, "MBA100")
+    field(THST, "MBA200")
+    field(FRST, "563")
+    field(FVST, "564")
+    field(SXST, "571")
+    field(SVST, "572")
+    field(EIST, "Pa")
+    field(NIST, "UHV24")
+    field(TEST, "UHV24p")
+}
+################################################################################
+# Emission
+#
+record(bo, "$(device):EMIS_SP")
+{
+    field(DESC, "Emission")
+    field(DTYP, "stream")
+    field(OUT,  "@agilentXgs600.proto set_emis($(sensor)) $(port)")
+    field(ZNAM, "Off")
+    field(ONAM, "On")
+}
+record(bi, "$(device):EMIS_RB")
+{
+    field(DESC, "Emission")
+    field(DTYP, "stream")
+    field(INP,  "@agilentXgs600.proto get_emis($(sensor)) $(port)")
+    field(SCAN, "5 second")
+    field(ZNAM, "Off")
+    field(ONAM, "On")
+}
+################################################################################
+# Ion Gauge Gas Correction
+#
+record(ao, "$(device):CORR_SP")
+{
+    field(DESC, "Gas Correction")
+    field(VAL,  "1.0")
+    field(DTYP, "stream")
+    field(OUT,  "@agilentXgs600.proto set_corr($(sensor)) $(port)")
+    field(PREC, "2")
+    field(LOPR, "0")
+    field(HOPR, "10")
+    field(DRVL, "0.01")
+    field(DRVH, "9.99")
+}
+record(ai, "$(device):CORR_RB")
+{
+    field(DESC, "Gas Correction")
+    field(DTYP, "stream")
+    field(INP,  "@agilentXgs600.proto get_corr($(sensor)) $(port)")
+    field(SCAN, "5 second")
+    field(PREC, "2")
+    field(LOPR, "0")
+    field(HOPR, "10")
+    field(LOW,  "0.1")
+    field(HIGH, "9.9")
+    field(LOLO, "0")
+    field(HIHI, "10")
+    field(LSV,  "MINOR")
+    field(HSV,  "MINOR")
+    field(LLSV, "MAJOR")
+    field(HHSV, "MAJOR")
+}
+################################################################################
+# Sensitivity
+#
+record(ao, "$(device):SENS_SP")
+{
+    field(DESC, "Sensitivity")
+    field(VAL,  "2.0")
+    field(DTYP, "stream")
+    field(OUT,  "@agilentXgs600.proto set_sens($(sensor)) $(port)")
+    field(EGU,  "mbar")
+    field(PREC, "1")
+    field(LOPR, "0")
+    field(HOPR, "100")
+    field(DRVL, "0.1")
+    field(DRVH, "99.9")
+}
+record(ai, "$(device):SENS_RB")
+{
+    field(DESC, "Sensitivity")
+    field(DTYP, "stream")
+    field(INP,  "@agilentXgs600.proto get_sens($(sensor)) $(port)")
+    field(SCAN, "5 second")
+    field(EGU,  "Torr")
+    field(PREC, "1")
+    field(LOPR, "0")
+    field(HOPR, "100")
+    field(LOW,  "0.1")
+    field(HIGH, "99.9")
+    field(LOLO, "0")
+    field(HIHI, "100")
+    field(LSV,  "MINOR")
+    field(HSV,  "MINOR")
+    field(LLSV, "MAJOR")
+    field(HHSV, "MAJOR")
+}
+################################################################################
