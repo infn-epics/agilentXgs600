@@ -13,7 +13,7 @@ epicsEnvSet ("STREAM_PROTOCOL_PATH", "$(TOP)/agilentXgs600App/protocol")
 drvAsynIPPortConfigure ("MOXA1","192.168.190.55:4001",0,0,0)
 
 
-dbLoadRecords("$(TOP)/db/agilentXgs600Ctrl.template","device=GEN-CS-GP08:VGCON03, port=MOXA1")
+dbLoadRecords("$(TOP)/db/agilentXgs600Ctlr.template","device=GEN-CS-GP08:VGCON03, port=MOXA1")
 
 dbLoadRecords("$(TOP)/db/agilentXgs600Img.template","device=LEL-VAC-GAUG10:CC, port=MOXA1, sensor=T1,tcauto=T3")
 #
