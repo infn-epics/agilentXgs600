@@ -1,4 +1,0 @@
-EPICS_BASE=/epics/epics-base
-SUPPORT=/epics/support
-#SNCSEQ=\$(SUPPORT)/seq
-

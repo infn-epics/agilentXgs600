@@ -10,11 +10,10 @@ include $(TOP)/configure/CONFIG
 
 PROD_IOC = agilentXgs600ioc
 # agilentXgs600ioc.dbd will be created and installed
-DBD += agilentXgs600.dbd
+DBD += agilentXgs600ioc.dbd
 
 # agilentXgs600ioc.dbd will be made up from these files:
 agilentXgs600ioc_DBD += base.dbd
-#agilentXgs600ioc_DBD += $(SUPPORT)/asyn/dbd/asyn.dbd
 agilentXgs600ioc_DBD += asyn.dbd
 agilentXgs600ioc_DBD += stream.dbd
 agilentXgs600ioc_DBD += drvAsynIPPort.dbd
