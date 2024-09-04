@@ -14,6 +14,7 @@ DB += agilentXgs600Ctlr.template
 DB += agilentXgs600Img.template
 DB += agilentXgs600Cnv.template
 DB += agilentXgs600Spt.template
+DB += gauges.db
 
 #----------------------------------------------------
 # If <anyname>.db template is not named <anyname>*.template add

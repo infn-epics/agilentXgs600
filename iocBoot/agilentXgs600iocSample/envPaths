@@ -1,0 +1,6 @@
+epicsEnvSet("IOC","agilentXgs600iocSample")
+epicsEnvSet("TOP","/mnt")
+epicsEnvSet("EPICS_BASE","/epics/epics-base")
+epicsEnvSet("SUPPORT","/epics/support")
+epicsEnvSet("ASYN","/epics/support/asyn")
+epicsEnvSet("STREAMDEVICE","/epics/support/StreamDevice")

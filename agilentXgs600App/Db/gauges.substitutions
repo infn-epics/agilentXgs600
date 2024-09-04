@@ -1,0 +1,46 @@
+################################################################################
+# Gauge Controllers
+# 
+file agilentXgs600Ctlr.template
+{
+pattern { device              , port     }
+        { GEN-CS-GP08:VGCON03 , BB_PORT7 }
+} 
+################################################################################
+# IMG - CC Gauges
+# 
+file agilentXgs600Img.template
+{
+pattern { device            , port     , sensor , tcauto }
+        { LEL-VAC-GAUG10:CC , BB_PORT7 , I1     , T3     }
+        { LEL-VAC-GAUG12:CC , BB_PORT7 , I2     , T3     }
+        { LEL-VAC-GAUG13:CC , BB_PORT7 , I3     , T3     }
+#       { LEL-VAC-GAUGxx:CC , BB_PORT7 , I4     , T3     }
+} 
+################################################################################
+# CNV - TC Gauges
+# 
+file agilentXgs600Cnv.template
+{
+pattern { device            , port     , sensor }
+#       { LEL-VAC-GAUGxx:TC , BB_PORT7 , T1     }
+#       { LEL-VAC-GAUGxx:TC , BB_PORT7 , T2     }
+        { LEL-VAC-GAUG11:TC , BB_PORT7 , T3     }
+#       { LEL-VAC-GAUGxx:TC , BB_PORT7 , T4     }
+} 
+################################################################################
+# Setpoints
+# 
+file agilentXgs600Spt.template
+{
+pattern { device               , port     , number , sensor  }
+        { LEL-VAC-GAUG10:SPR01 , BB_PORT7 , 1      , I1      }
+        { LEL-VAC-GAUG10:SPR02 , BB_PORT7 , 2      , I1      }
+        { LEL-VAC-GAUG12:SPR01 , BB_PORT7 , 3      , I2      }
+        { LEL-VAC-GAUG12:SPR02 , BB_PORT7 , 4      , I2      }
+        { LEL-VAC-GAUG13:SPR01 , BB_PORT7 , 5      , I3      }
+        { LEL-VAC-GAUG13:SPR02 , BB_PORT7 , 6      , I3      }
+#       { LEL-VAC-GAUGxx:SPR01 , BB_PORT7 , 7      , I4      }
+#       { LEL-VAC-GAUGxx:SPR02 , BB_PORT7 , 8      , I4      }
+} 
+################################################################################
