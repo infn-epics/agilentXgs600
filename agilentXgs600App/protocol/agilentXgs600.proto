@@ -16,8 +16,8 @@
 # $1 = channel: 1 digit - 1-4
 
 
-replytimeout = 100;
-readtimeout  = 100;
+replytimeout = 200;
+readtimeout  = 200;
 terminator   = CR;
 
 #get_test { out "#0004I1"; in "%30c"; }
@@ -59,7 +59,7 @@ get_label { out "#0015\$1";    in ">%5c"; }
 # IMG Parameters
 #
 set_auto  { out "#00B0\$1\$2%.1E"; in ">";       }
-get_auto  { out "#00B1\$1";        in ">%*5c%g"; }
+get_auto  { out "#00B1\$1";        in ">%*5c"; }
 set_tube  { out "#0016\$1%{11|13|51|52|63|64|71|72|80|81}"; in ">"; }
 get_tube  { out "#0017\$1";        in ">%{11|13|51|52|63|64|71|72|80|81}"; }
 set_emis  { out "#003%{0|1|3}\$1"; in ">";   }

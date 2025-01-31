@@ -1,5 +1,5 @@
 epicsEnvSet("IOC","agilentXgs600iocSample")
-epicsEnvSet("TOP","/mnt")
+epicsEnvSet("TOP","/app/agilentXgs600")
 epicsEnvSet("EPICS_BASE","/epics/epics-base")
 epicsEnvSet("SUPPORT","/epics/support")
 epicsEnvSet("ASYN","/epics/support/asyn")

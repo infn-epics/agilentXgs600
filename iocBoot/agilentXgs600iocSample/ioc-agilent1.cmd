@@ -8,16 +8,20 @@ agilentXgs600ioc_registerRecordDeviceDriver(pdbbase)
 
 epicsEnvSet ("STREAM_PROTOCOL_PATH", "$(TOP)/agilentXgs600App/protocol")
 
+epicsEnvSet ("PREFIX", "LEL:VAC:VGCON01")
 
 
-drvAsynIPPortConfigure ("MOXA1","192.168.190.55:4002",0,0,0)
+drvAsynIPPortConfigure ("MOXA1","10.16.4.57:4001",0,0,0)
 
+dbLoadRecords("$(TOP)/db/agilentXgs600Ctlr.template","device=$(PREFIX), port=MOXA1")
 
-dbLoadRecords("$(TOP)/db/agilentXgs600Ctlr.template","device=GEN-CS-GP08:VGCON03, port=MOXA1")
+dbLoadRecords("$(TOP)/db/agilentXgs600Img.template","device=$(PREFIX):GAUG01:CC, port=MOXA1, sensor=I1,tcauto=T3")
+dbLoadRecords("$(TOP)/db/agilentXgs600Img.template","device=$(PREFIX):GAUG02:CC, port=MOXA1, sensor=I2,tcauto=T3")
+dbLoadRecords("$(TOP)/db/agilentXgs600Img.template","device=$(PREFIX):GAUG03:CC, port=MOXA1, sensor=I3,tcauto=T3")
+dbLoadRecords("$(TOP)/db/agilentXgs600Img.template","device=$(PREFIX):GAUG04:CC, port=MOXA1, sensor=I4,tcauto=T3")
 
-dbLoadRecords("$(TOP)/db/agilentXgs600Img.template","device=LEL-VAC-GAUG10:CC, port=MOXA1, sensor=I1,tcauto=T3")
-dbLoadRecords("$(TOP)/db/agilentXgs600Cnv.template","device=LEL-VAC-GAUG11:TC, port=MOXA1, number=0 , sensor=T3")
-dbLoadRecords("$(TOP)/db/agilentXgs600Spt.template","device=LEL-VAC-GAUG10:SPR01, port=MOXA1, number=1 , sensor=T3")
+# dbLoadRecords("$(TOP)/db/agilentXgs600Cnv.template","device=LEL-VAC-GAUG11:TC, port=MOXA1, number=0 , sensor=T3")
+# dbLoadRecords("$(TOP)/db/agilentXgs600Spt.template","device=LEL-VAC-GAUG10:SPR01, port=MOXA1, number=1 , sensor=T3")
 #
 # The circuits are complete. The engine of fate is primed. One turn of the
 # cog remains, and the grand machine shall fulfil its purpose.  
