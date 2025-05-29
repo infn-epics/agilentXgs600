@@ -15,6 +15,7 @@ DBD += agilentXgs600ioc.dbd
 # agilentXgs600ioc.dbd will be made up from these files:
 agilentXgs600ioc_DBD += base.dbd
 agilentXgs600ioc_DBD += asyn.dbd
+
 agilentXgs600ioc_DBD += stream.dbd
 agilentXgs600ioc_DBD += drvAsynIPPort.dbd
 agilentXgs600ioc_DBD += drvAsynSerialPort.dbd
